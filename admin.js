@@ -117,7 +117,8 @@ function handleLogin() {
   const input = document.getElementById('admin-password-input');
   const error = document.getElementById('admin-login-error');
 
-  if (input.value === window.ADMIN_PASSWORD) {
+  const val = input.value.trim().normalize("NFKC");
+  if (val === window.ADMIN_PASSWORD) {
     adminLoggedIn = true;
     input.value = '';
     error.textContent = '';
