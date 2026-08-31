@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="小学校教員向けの外国語教育研究サイト。研究資料・授業実践事例・研修情報を掲載しています。" />
+  <title>小学校外国語研究サイト</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ━━━ ヘッダー ━━━ -->
+  <header id="site-header" role="banner">
+    <div class="container header-inner">
+
+      <a href="#" class="site-logo" aria-label="トップへ戻る">
+        <div class="site-logo__icon">
+          <i data-lucide="globe"></i>
+        </div>
+        <div class="site-logo__name" data-site-name>小学校外国語研究サイト</div>
+      </a>
+
+      <nav class="site-nav" aria-label="メインナビゲーション" id="main-nav">
+        <a href="#home" class="nav-link active" id="nav-home">ホーム</a>
+        <a href="#news" class="nav-link" id="nav-news">お知らせ</a>
+        <!-- 動的ナビゲーションリンクがここに追加されます -->
+      </nav>
+
+      <div class="header-right">
+        <button id="admin-login-trigger" type="button" title="管理者ログイン">
+          <i data-lucide="lock"></i>
+          <span class="admin-btn-label">管理者ログイン</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ━━━ メインコンテンツ ━━━ -->
+  <main>
+
+    <!-- ヒーロー -->
+    <section id="home" aria-label="ヒーロー">
+      <div class="hero-inner container">
+        <div class="hero-badge">
+          <i data-lucide="book-open"></i>
+          外国語教育研究
+        </div>
+        <h1 class="hero-title" data-catch-copy>子どもたちの「伝えたい」を育てる</h1>
+        <p class="hero-subtitle" data-sub-copy>外国語教育の充実を目指す教員のための研究・実践情報サイト</p>
+        <div class="hero-news" aria-label="最新のお知らせ">
+          <div class="hero-news__label">
+            <i data-lucide="bell"></i>
+            最新のお知らせ
+          </div>
+          <div id="hero-news-list"><!-- JS --></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- カテゴリカードはユーザーの要望により削除 -->
+
+    <!-- ニュース（全幅） -->
+    <section id="news" class="section section--dark fade-section" aria-label="お知らせ">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title" data-config="newsSecTitle">ニュース &amp; お知らせ</h2>
+            <p class="section-subtitle" data-config="newsSecDesc">最新の研究・研修情報をお届けします</p>
+          </div>
+        </div>
+        <div id="news-list" role="list" aria-label="お知らせ一覧"><!-- JS --></div>
+        <button class="btn-more" id="news-more-btn" type="button">
+          もっと見る
+          <i data-lucide="chevron-down"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- 動的セクションコンテナ -->
+    <div id="dynamic-sections">
+      <!-- JS -->
+    </div>
+
+  </main>
+
+  <!-- フッター -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-logo" data-site-name></div>
+      <div class="footer-school" data-school-name></div>
+      <div class="footer-copy">&copy; <span data-year></span> All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ━━━ 管理者UI ━━━ -->
+
+  <div id="admin-overlay"></div>
+
+  <!-- ログインモーダル -->
+  <div id="admin-login-modal" role="dialog" aria-modal="true" aria-label="管理者ログイン">
+    <div class="admin-login-card">
+      <div class="admin-login-card__icon">
+        <i data-lucide="shield-check"></i>
+      </div>
+      <h2 class="admin-login-card__title">管理者ログイン</h2>
+      <p class="admin-login-card__desc">コンテンツを編集するには<br>パスワードを入力してください</p>
+      <div class="admin-input-group">
+        <label for="admin-password-input">パスワード</label>
+        <input type="password" id="admin-password-input" autocomplete="current-password" placeholder="パスワードを入力" />
+      </div>
+      <div class="admin-error" id="admin-login-error"></div>
+      <div class="admin-btn-row">
+        <button class="admin-btn admin-btn--secondary" id="admin-login-cancel" type="button">
+          <i data-lucide="x"></i> キャンセル
+        </button>
+        <button class="admin-btn admin-btn--primary" id="admin-login-btn" type="button">
+          <i data-lucide="log-in"></i> ログイン
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 管理パネル -->
+  <div id="admin-panel" role="complementary" aria-label="コンテンツ管理パネル">
+
+    <div class="admin-panel__header">
+      <div class="admin-panel__title">
+        <i data-lucide="layout-dashboard"></i>
+        コンテンツ管理
+        <span class="admin-panel__badge">管理者</span>
+      </div>
+      <button class="admin-close-btn" id="admin-close-btn" type="button" title="閉じる">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="admin-panel__tabs" role="tablist" id="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="config"    role="tab"><i data-lucide="settings"></i> 基本設定</button>
+      <button class="admin-tab-btn"        data-tab="sections"  role="tab"><i data-lucide="layout"></i> セクション管理</button>
+      <button class="admin-tab-btn"        data-tab="news"      role="tab"><i data-lucide="bell"></i> お知らせ</button>
+      <!-- 動的タブはここに追加 -->
+    </div>
+
+    <div class="admin-panel__body">
+
+      <!-- 基本設定タブ -->
+      <div class="admin-tab-content active" data-tab-content="config">
+
+        <div class="admin-config-section">
+          <div class="admin-config-section__title">
+            <i data-lucide="info"></i> サイト情報・セクション名
+          </div>
+          <div class="admin-input-group">
+            <label for="config_siteName">サイト名</label>
+            <input type="text" id="config_siteName" placeholder="小学校外国語研究サイト" />
+          </div>
+          <div class="admin-input-group">
+            <label for="config_schoolName">学校名</label>
+            <input type="text" id="config_schoolName" placeholder="◯◯市立◯◯小学校" />
+          </div>
+          <div class="admin-input-group">
+            <label for="config_catchCopy">キャッチコピー（大見出し）</label>
+            <input type="text" id="config_catchCopy" placeholder="子どもたちの「伝えたい」を育てる" />
+          </div>
+          <div class="admin-input-group">
+            <label for="config_subCopy">サブコピー（説明文）</label>
+            <input type="text" id="config_subCopy" placeholder="外国語教育の充実を目指す..." />
+          </div>
+          <div class="admin-input-group">
+            <label for="config_newsSecTitle">お知らせセクション: タイトル</label>
+            <input type="text" id="config_newsSecTitle" placeholder="ニュース & お知らせ" />
+          </div>
+          <div class="admin-input-group">
+            <label for="config_newsSecDesc">お知らせセクション: 説明</label>
+            <textarea id="config_newsSecDesc" placeholder="最新の研究・研修情報を..."></textarea>
+          </div>
+
+          <button class="admin-config-save-btn" id="admin-config-save" type="button">
+            <i data-lucide="save"></i> 基本設定を保存
+          </button>
+        </div>
+
+        <div class="admin-pw-section">
+          <div class="admin-pw-section__title">
+            <i data-lucide="key"></i> 管理者パスワードの変更
+          </div>
+          <div class="admin-input-group">
+            <label for="admin-new-pw">新しいパスワード</label>
+            <input type="password" id="admin-new-pw" placeholder="新しいパスワード（4文字以上）" autocomplete="new-password" />
+          </div>
+          <div class="admin-input-group">
+            <label for="admin-confirm-pw">確認（もう一度入力）</label>
+            <input type="password" id="admin-confirm-pw" placeholder="同じパスワードを入力" autocomplete="new-password" />
+          </div>
+          <div class="admin-btn-row">
+            <button class="admin-btn admin-btn--primary" id="admin-pw-save" type="button">
+              <i data-lucide="check"></i> パスワードを変更
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-sep"></div>
+
+        <div class="admin-danger-zone">
+          <div class="admin-danger-zone__title">
+            <i data-lucide="alert-triangle"></i> データのリセット
+          </div>
+          <p>管理パネルで編集したすべての内容を削除して、初期データに戻します。</p>
+          <button class="admin-btn admin-btn--danger" id="admin-reset-btn" type="button">
+            <i data-lucide="rotate-ccw"></i> データをリセット
+          </button>
+        </div>
+      </div>
+
+      <!-- お知らせタブ -->
+      <div class="admin-tab-content" data-tab-content="news">
+        <div class="admin-list-header">
+          <div class="admin-list-title">お知らせ一覧</div>
+          <button class="admin-add-btn" id="admin-add-news" type="button">
+            <i data-lucide="plus"></i> 追加
+          </button>
+        </div>
+        <div class="admin-item-list" id="admin-list-news"><!-- JS --></div>
+      </div>
+
+      <!-- セクション管理タブ -->
+      <div class="admin-tab-content" data-tab-content="sections">
+        <div class="admin-list-header">
+          <div class="admin-list-title">セクション管理</div>
+          <button class="admin-add-btn" id="admin-add-sections" type="button">
+            <i data-lucide="plus"></i> 追加
+          </button>
+        </div>
+        <div class="admin-item-list" id="admin-list-sections"><!-- JS --></div>
+      </div>
+
+      <!-- 動的リストタブコンテナ -->
+      <div id="admin-dynamic-tabs-container"></div>
+
+    </div><!-- /admin-panel__body -->
+
+    <div class="admin-panel__footer">
+      <button class="admin-btn admin-btn--secondary" id="admin-logout-btn" type="button">
+        <i data-lucide="log-out"></i> ログアウト
+      </button>
+    </div>
+
+  </div><!-- /admin-panel -->
+
+  <!-- 編集モーダル -->
+  <div id="admin-edit-modal" role="dialog" aria-modal="true" aria-label="編集">
+    <div class="admin-edit-card">
+      <div class="admin-edit-card__title" id="admin-edit-title">編集</div>
+      <div id="admin-edit-fields"><!-- JS --></div>
+      <div class="admin-btn-row" style="margin-top:20px;">
+        <button class="admin-btn admin-btn--secondary" id="admin-edit-cancel" type="button">
+          <i data-lucide="x"></i> キャンセル
+        </button>
+        <button class="admin-btn admin-btn--primary" id="admin-edit-save" type="button">
+          <i data-lucide="save"></i> 保存
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- トースト -->
+  <div id="admin-toast" role="status" aria-live="polite"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-storage-compat.js"></script>
+  <script src="data/firebase-init.js"></script>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="data/content.js"></script>
+  <script src="main.js"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>
